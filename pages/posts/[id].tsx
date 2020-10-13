@@ -5,7 +5,7 @@ import Date from "../../components/date";
 import utilStyles from '../../styles/utils.module.css'
 
 export default function Post({ postData }) {
-    return <Layout>
+    return <Layout home={null}>
         <Head>
             <title>{postData.title}</title>
         </Head>
@@ -20,7 +20,7 @@ export default function Post({ postData }) {
 }
 
 export async function getStaticPaths() {
-    const paths = getAllPostIds()
+    const paths = getAllPostIds();
     return {
         paths,
         fallback: false

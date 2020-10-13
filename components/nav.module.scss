@@ -1,0 +1,27 @@
+.navContainer {
+    max-width: 100%;
+    height: 3rem;
+    background-color: black;
+    padding: 0.5em;
+    display: flex;
+    list-style: none;
+}
+
+.navItem {
+    margin: 0 0.25em;
+    padding: 0 0.5em;
+    line-height: 2em;
+    height: 2em;
+    color: white;
+    transition: background 300ms ease;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten(black, 20%);
+    }
+
+    &.navItemActive {
+        background-color: lighten(black, 25%);
+    }
+}

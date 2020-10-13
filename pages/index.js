@@ -4,8 +4,10 @@ import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/date'
+import {getFilteredRecords, request} from "../lib/menuItems";
 
-export default function Home({ allPostsData }) {
+export default function Home({ allPostsData, menuItems }) {
+    console.log(menuItems.allMenuItems)
   return (
       <Layout home>
         <Head>
@@ -21,16 +23,18 @@ export default function Home({ allPostsData }) {
           <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
               <h2 className={utilStyles.headingLg}>Blog</h2>
               <ul className={utilStyles.list}>
-                  {allPostsData.map(({ id, date, title }) => (
-                      <li className={utilStyles.listItem} key={id}>
-                          <Link href={`/posts/${id}`}>
-                              <a>{title}</a>
-                          </Link>
+                  {menuItems && menuItems.allMenuItems.map(({ name, description, price, picture }) => (
+                      <li className={utilStyles.listItem} key={name}>
+                          {name}
                           <br />
                           <small className={utilStyles.lightText}>
-                              <Date dateString={date} />
+                              {description}
+                              {price}
+                              {/*{picture}*/}
+                              <img src={picture?.responsiveImage?.src} width={"300px"} height={"300px"} style={{borderRadius: "50%", backgroundColor: "#CCCCCC"}}/>
                           </small>
                       </li>
+                      
                   ))}
               </ul>
           </section>
@@ -40,9 +44,27 @@ export default function Home({ allPostsData }) {
 
 export async function getStaticProps() {
     const allPostsData = getSortedPostsData()
+
+    const MENU_ITEMS = `query MenuItems {
+      allMenuItems {
+        name
+        id
+        description
+        picture {
+          responsiveImage {
+            src
+          }
+        }
+      }
+    }`;
+    const menuItems = await request({
+        query: MENU_ITEMS,
+    });
+
     return {
         props: {
-            allPostsData
+            allPostsData,
+            menuItems
         }
     }
 }
