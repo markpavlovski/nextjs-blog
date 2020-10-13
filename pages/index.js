@@ -30,11 +30,9 @@ export default function Home({ allPostsData, menuItems }) {
                           <small className={utilStyles.lightText}>
                               {description}
                               {price}
-                              {/*{picture}*/}
                               <img src={picture?.responsiveImage?.src} width={"300px"} height={"300px"} style={{borderRadius: "50%", backgroundColor: "#CCCCCC"}}/>
                           </small>
                       </li>
-                      
                   ))}
               </ul>
           </section>
