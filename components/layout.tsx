@@ -2,14 +2,23 @@ import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Head from "next/head";
 import Link from "next/link";
+import {LayoutProps} from "./types";
+import React, {useState} from "react";
+import Nav from "./nav";
 
 
 const name = 'Your Name';
 export const siteTitle = 'Next.js Sample Website';
+const pages = ["Home", "About", "Projects", "Contact"];
 
-export default function Layout({ children, home }) {
+const Layout: React.FC<LayoutProps> = props => {
+    const { children, home } = props;
+    const [activePage, setActivePage] = useState(pages[0]);
+
     return (
-        <div className={styles.container}>
+        <>
+            <Nav activePage={activePage} setActivePage={setActivePage} pages={pages}/>
+            <div className={styles.container}>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
                 <meta
@@ -63,4 +72,7 @@ export default function Layout({ children, home }) {
                 </div>
             )}
         </div>
-    )}
+            </>
+    )};
+
+export default Layout;
